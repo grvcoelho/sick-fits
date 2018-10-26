@@ -4,7 +4,7 @@ import StyledNav from './styles/NavStyles'
 const Nav = () => (
   <StyledNav>
     <Link href="/items">
-      <a>Items</a>
+      <a>Shop</a>
     </Link>
 
     <Link href="/sell">
