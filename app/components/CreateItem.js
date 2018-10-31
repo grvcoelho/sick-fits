@@ -28,10 +28,10 @@ export const CREATE_ITEM_MUTATION = gql`
 
 class CreateItem extends Component {
   state = {
-    title: 'Cool Shoes',
-    description: 'I love these shoes',
-    image: 'shoe.png',
-    largeImage: 'shoexl.png',
+    title: '',
+    description: '',
+    image: '',
+    largeImage: '',
     price: 100,
   }
 
@@ -52,6 +52,27 @@ class CreateItem extends Component {
     })
   }
 
+  uploadImage = async (e) => {
+    const files = e.target.files
+    const data = new FormData()
+    data.append('file', files[0])
+
+    // This is the upload_preset set on Cloudnary
+    data.append('upload_preset', 'sick-fits')
+
+    const res = await fetch('https://api.cloudinary.com/v1_1/dt3pklcrm/image/upload', {
+      method: 'POST',
+      body: data,
+    })
+
+    const file = await res.json()
+
+    this.setState({
+      image: file.secure_url,
+      largeImage: file.eager[0].secure_url,
+    })
+  }
+
   render () {
     return (
       <Mutation
@@ -66,6 +87,21 @@ class CreateItem extends Component {
               <ErrorMessage error={error} />
 
               <fieldset disabled={loading} aria-busy={loading}>
+                <label htmlFor="file">
+                  Image
+                  <input
+                    type="file"
+                    id="file"
+                    name="file"
+                    placeholder="Upload an image"
+                    required
+                    onChange={this.uploadImage}
+                  />
+                  {this.state.image && (
+                    <img width="200" src={this.state.image} alt="Upload Preview" />
+                  )}
+                </label>
+
                 <label htmlFor="title">
                   Title
                   <input
