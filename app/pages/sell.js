@@ -2,10 +2,10 @@ import { Fragment } from 'react'
 import Link from 'next/link'
 import CreateItem from '../components/CreateItem'
 
-const Home = () => (
+const SellPage = () => (
   <Fragment>
     <CreateItem />
   </Fragment>
 )
 
-export default Home
+export default SellPage
