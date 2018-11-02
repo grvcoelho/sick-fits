@@ -1,3 +1,3 @@
-import Home from './index'
+import ItemsPage from './index'
 
-export default Home
+export default ItemsPage
