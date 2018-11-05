@@ -1,11 +1,5 @@
-import { Fragment } from 'react'
-import Link from 'next/link'
-import Items from '../components/Items'
+import ItemsPage from './items'
 
-const HomePage = () => (
-  <Fragment>
-    <Items />
-  </Fragment>
-)
+const HomePage = ItemsPage
 
 export default HomePage
