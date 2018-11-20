@@ -1,39 +1,40 @@
 import Link from 'next/link'
+import { Fragment } from 'react'
 import StyledNav from './styles/NavStyles'
 import CurrentUser from './CurrentUser'
 
 const Nav = () => (
-  <StyledNav>
-    <CurrentUser>
-      {({ data }) => {
-        const { me } = data
+  <CurrentUser>
+    {({ data: { me }}) => (
+      <StyledNav>
+        <Link href="/items">
+          <a>Shop</a>
+        </Link>
 
-        return me
-          ? <p>{me.name}</p>
-          : null
-      }}
-    </CurrentUser>
+        {me && (
+          <Fragment>
+            <Link href="/sell">
+              <a>Sell</a>
+            </Link>
 
-    <Link href="/items">
-      <a>Shop</a>
-    </Link>
+            <Link href="/orders">
+              <a>Orders</a>
+            </Link>
 
-    <Link href="/sell">
-      <a>Sell</a>
-    </Link>
+            <Link href="/me">
+              <a>Account</a>
+            </Link>
+          </Fragment>
+        )}
 
-    <Link href="/signup">
-      <a>Signup</a>
-    </Link>
-
-    <Link href="/orders">
-      <a>Orders</a>
-    </Link>
-
-    <Link href="/me">
-      <a>Account</a>
-    </Link>
-  </StyledNav>
+        {!me && (
+          <Link href="/signup">
+            <a>Sign In</a>
+          </Link>
+        )}
+      </StyledNav>
+    )}
+  </CurrentUser>
 )
 
 export default Nav
