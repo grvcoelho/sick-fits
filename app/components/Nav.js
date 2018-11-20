@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { Fragment } from 'react'
 import StyledNav from './styles/NavStyles'
 import CurrentUser from './CurrentUser'
+import Signout from './Signout'
 
 const Nav = () => (
   <CurrentUser>
@@ -24,6 +25,8 @@ const Nav = () => (
             <Link href="/me">
               <a>Account</a>
             </Link>
+
+            <Signout />
           </Fragment>
         )}
 

@@ -1,5 +1,11 @@
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
+
+const defaultCookieOptions = {
+  httpOnly: true,
+  maxAge: 1000 * 60 * 60 * 24 * 365,
+}
+
 const Mutation = {
   async createItem(parent, args, ctx, info) {
     // TODO: Check if they are logged in
@@ -53,11 +59,7 @@ const Mutation = {
     )
 
     const token = jwt.sign({ userId: user.id }, process.env.APP_SECRET)
-
-    ctx.response.cookie('token', token, {
-      httpOnly: true,
-      maxAge: 1000 * 60 * 60 * 24 * 365,
-    })
+    ctx.response.cookie('token', token, defaultCookieOptions)
 
     return user
   },
@@ -74,13 +76,15 @@ const Mutation = {
     if (!valid) throw new Error(`Invalid password`)
 
     const token = jwt.sign({ userId: user.id }, process.env.APP_SECRET)
-
-    ctx.response.cookie('token', token, {
-      httpOnly: true,
-      maxAge: 1000 * 60 * 60 * 24 * 365,
-    })
+    ctx.response.cookie('token', token, defaultCookieOptions)
 
     return user
+  },
+
+  signout(parent, args, ctx, info) {
+    ctx.response.clearCookie('token', defaultCookieOptions)
+
+    return { message: 'Goodbye!' }
   },
 };
 
